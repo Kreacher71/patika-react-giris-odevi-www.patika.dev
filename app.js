@@ -1,29 +1,8 @@
-const axios = require('axios').default;
+import axios from "axios"
 
-const getUser = async ( number ) => {
-    return new Promise( async ( resolve, reject ) => {
-        const { data } = await axios("https://jsonplaceholder.typicode.com/users/" + number);
-        
-        resolve( data );
-        reject('there is an error in getUser');
-    }
-    );
-    
-}
-const getPost = async ( number ) => {
-    return new Promise( async ( resolve, reject ) => {
-        const { data } = await axios("https://jsonplaceholder.typicode.com/posts?userId=" + number);
-        
-        resolve( data );
-        reject('there is an error in getPost');
-    }
-    );
-    
-}
+export default async function getData(user_id){
+    const{ data : user } = await axios("https://jsonplaceholder.typicode.com/users/" + user_id)
+    const{ data : posts } = await axios("https://jsonplaceholder.typicode.com/posts?userId=" + user_id)
 
-Promise.all([getUser(1), getPost(1)])
-    .then(console.log)
-    .catch(console.log);
-
-
-    
+    return (user, posts);
+};
